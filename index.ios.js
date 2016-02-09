@@ -13,13 +13,8 @@ import React, {
   Image
 } from 'react-native';
 
-let API_KEY = '7waqfqbprs7pajbz28mqf6vz';
-let API_URL = 'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json';
-let PAGE_SIZE = 25;
-let PARAMS = '?apikey=' + API_KEY + '&page_limit=' + PAGE_SIZE;
-let REQUEST_URL = API_URL + PARAMS;
 
-class AwesomeProject extends Component {
+class MovieMe extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -118,4 +113,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
+AppRegistry.registerComponent('MovieMe', () => MovieMe);
