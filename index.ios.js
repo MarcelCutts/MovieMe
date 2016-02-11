@@ -1,8 +1,8 @@
 'use strict';
 import React, { AppRegistry, Component } from 'react-native';
-import MovieList from './components/MovieList.js';
+import MovieList from './components/MovieList';
 
-class Container extends Component {
+class AwesomeProject extends Component {
   render() {
     return (
       <MovieList />
@@ -10,4 +10,4 @@ class Container extends Component {
   }
 }
 
-AppRegistry.registerComponent('Container', () => Container);
+AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);

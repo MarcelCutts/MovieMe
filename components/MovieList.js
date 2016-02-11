@@ -7,8 +7,12 @@ import React, {
   ListView,
   Image
 } from 'react-native';
+import config from '../config';
 
-class MovieMe extends Component {
+const PARAMS = '?apikey=' + config.API_KEY + '&page_limit=' + config.PAGE_SIZE;
+const REQUEST_URL = config.API_URL + PARAMS;
+
+class MovieList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -106,3 +110,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
 });
+
+export default MovieList;
