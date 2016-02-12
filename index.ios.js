@@ -2,7 +2,7 @@
 import React, { AppRegistry, Component } from 'react-native';
 import MovieList from './components/MovieList';
 
-class AwesomeProject extends Component {
+class MovieMe extends Component {
   render() {
     return (
       <MovieList />
@@ -10,4 +10,4 @@ class AwesomeProject extends Component {
   }
 }
 
-AppRegistry.registerComponent('AwesomeProject', () => AwesomeProject);
+AppRegistry.registerComponent('MovieMe', () => MovieMe);
