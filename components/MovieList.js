@@ -62,7 +62,7 @@ class MovieList extends Component {
 
   renderMovie(movie) {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, styles.card]}>
         <Image
           source={{uri: movie.posters.thumbnail}}
           style={styles.thumbnail}
@@ -83,12 +83,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  card: {
     shadowOffset:{
       width: 10,
       height: 10,
     },
     shadowColor: 'black',
     shadowOpacity: 1.0,
+    margin: 30,
   },
   rightContainer: {
     flex: 1,
