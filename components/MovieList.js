@@ -4,8 +4,8 @@ import React, {
   StyleSheet,
   Text,
   View,
-  ListView,
-  Image
+  Image,
+  TouchableHighlight,
 } from 'react-native';
 import config from '../config';
 
@@ -17,9 +17,7 @@ class MovieList extends Component {
     super(props);
     this.state = {
       loaded: false,
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2,
-      }),
+      currentMovie: 0,
     };
   }
 
@@ -27,7 +25,7 @@ class MovieList extends Component {
     let response = await fetch(REQUEST_URL);
     let responseData = await response.json();
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
+      movies: responseData.movies,
       loaded: true,
     });
   }
@@ -36,18 +34,21 @@ class MovieList extends Component {
     this.fetchData();
   }
 
+  onPressMovie = (event) => {
+    let nextMovieIndex = this.state.currentMovie + 1;
+    if (nextMovieIndex >= this.state.movies.length) {
+      this.setState({currentMovie: 0});
+    } else {
+      this.setState({currentMovie: nextMovieIndex});
+    }
+  };
+
   render() {
     if (!this.state.loaded) {
       return this.renderLoadingView();
     }
 
-    return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderMovie}
-        style={styles.listView}
-      />
-    );
+    return this.renderMovie(this.state.movies[this.state.currentMovie]);
   }
 
   renderLoadingView() {
@@ -62,16 +63,18 @@ class MovieList extends Component {
 
   renderMovie(movie) {
     return (
-      <View style={[styles.container, styles.card]}>
-        <Image
-          source={{uri: movie.posters.thumbnail}}
-          style={styles.thumbnail}
-        />
-        <View style={styles.rightContainer}>
-          <Text style={styles.title}>{movie.title}</Text>
-          <Text style={styles.year}>{movie.year}</Text>
+      <TouchableHighlight onPress={this.onPressMovie} style={styles.container}>
+        <View style={[styles.container, styles.card]}>
+          <Image
+            source={{uri: movie.posters.thumbnail}}
+            style={styles.thumbnail}
+          />
+          <View style={styles.rightContainer}>
+            <Text style={styles.title}>{movie.title}</Text>
+            <Text style={styles.year}>{movie.year}</Text>
+          </View>
         </View>
-      </View>
+      </TouchableHighlight>
     );
   }
 }
@@ -107,10 +110,6 @@ const styles = StyleSheet.create({
   thumbnail: {
     width: 53,
     height: 81,
-  },
-  listView: {
-    paddingTop: 20,
-    backgroundColor: '#F5FCFF',
   },
 });
 
