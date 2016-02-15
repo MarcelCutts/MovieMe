@@ -21,18 +21,29 @@ class MovieList extends Component {
     };
   }
 
-  async fetchData() {
+  componentDidMount() {
+    this.fetchMovies();
+  }
+
+  async fetchMovies() {
     let response = await fetch(REQUEST_URL);
-    let responseData = await response.json();
+    let responseJson = await response.json();
+    let sortedMovies = this.sortDataByAudienceScore(responseJson.movies);
     this.setState({
-      movies: responseData.movies,
+      movies: sortedMovies,
       loaded: true,
     });
   }
 
-  componentDidMount() {
-    this.fetchData();
-  }
+  // RT API requires use of snake_case
+  //jscs: disable requireCamelCaseOrUpperCaseIdentifiers
+  sortDataByAudienceScore(movies) {
+    return movies.sort((a, b)  => {
+      return b.ratings.audience_score - a.ratings.audience_score;
+    });
+
+    return sortedMovies;
+  }//jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
   onPressMovie = (event) => {
     let nextMovieIndex = this.state.currentMovie + 1;
