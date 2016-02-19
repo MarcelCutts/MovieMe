@@ -6,6 +6,7 @@ import React, {
   View,
   Image,
   TouchableHighlight,
+  Animated,
 } from 'react-native';
 import config from '../config';
 
@@ -18,11 +19,13 @@ class MovieList extends Component {
     this.state = {
       loaded: false,
       currentMovie: 0,
+      enter: new Animated.Value(0.5),
     };
   }
 
   componentDidMount() {
     this.fetchMovies();
+    this.animateCardEntrance();
   }
 
   async fetchMovies() {
@@ -54,13 +57,12 @@ class MovieList extends Component {
     }
   };
 
-  render() {
-    if (!this.state.loaded) {
-      return this.renderLoadingView();
-    }
-
-    return this.renderMovie(this.state.movies[this.state.currentMovie]);
-  }
+  animateCardEntrance() {
+    Animated.spring(
+      this.state.enter,
+      { toValue: 1, friction: 8 }
+    ).start();
+  };
 
   renderLoadingView() {
     return (
@@ -73,9 +75,11 @@ class MovieList extends Component {
   }
 
   renderMovie(movie) {
+    let animatedCardStyles = {transform: [{scale: this.state.enter}]};
+
     return (
-      <TouchableHighlight onPress={this.onPressMovie} style={styles.container}>
-        <View style={[styles.container, styles.card]}>
+      <View style={styles.container}>
+        <Animated.View style={[styles.card, animatedCardStyles]}>
           <Image
             source={{uri: movie.posters.thumbnail}}
             style={styles.thumbnail}
@@ -84,10 +88,18 @@ class MovieList extends Component {
             <Text style={styles.title}>{movie.title}</Text>
             <Text style={styles.year}>{movie.ratings.audience_score}%</Text>
           </View>
-        </View>
-      </TouchableHighlight>
+        </Animated.View>
+      </View>
     );
-  }
+  };
+
+  render() {
+    if (!this.state.loaded) {
+      return this.renderLoadingView();
+    }
+
+    return this.renderMovie(this.state.movies[this.state.currentMovie]);
+  };
 }
 
 const styles = StyleSheet.create({
@@ -103,9 +115,12 @@ const styles = StyleSheet.create({
       width: 10,
       height: 10,
     },
+    flex: 1,
     shadowColor: 'black',
     shadowOpacity: 1.0,
     margin: 30,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   rightContainer: {
     flex: 1,
