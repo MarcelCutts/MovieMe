@@ -23,8 +23,8 @@ class MovieList extends Component {
     };
   }
 
-  componentDidMount() {
-    this.fetchMovies();
+  async componentDidMount() {
+    await this.fetchMovies();
     this.animateCardEntrance();
   }
 
