@@ -5,8 +5,8 @@ import React, {
   Text,
   View,
   Image,
-  TouchableHighlight,
   Animated,
+  PanResponder,
 } from 'react-native';
 import config from '../config';
 
@@ -20,7 +20,52 @@ class MovieList extends Component {
       loaded: false,
       currentMovie: 0,
       enter: new Animated.Value(0.5),
+      pan: new Animated.ValueXY(),
     };
+  }
+
+  componentWillMount() {
+    this.panResponder = PanResponder.create({
+      onMoveShouldSetResponderCapture: () => true,
+      onMoveShouldSetPanResponderCapture: () => true,
+
+      onPanResponderGrant: (event, gestureState) => {
+        this.state.pan.setOffset({
+          x: this.state.pan.x._value,
+          y: this.state.pan.y._value,
+        });
+        this.state.pan.setValue({x: 0, y: 0});
+      },
+
+      // It's not super obvious, the but null at index
+      // 0 is there to state to ignore the native event.
+      // We only choose to prove a dx update to ensure our
+      // movie card can only go left or right.
+      onPanResponderMove: Animated.event([
+        null, {dx: this.state.pan.x},
+      ]),
+
+      onPanResponderRelease: (event, {vx}) => {
+        // Simple attempt for demo purposes,
+        // if velocity of card is > arbitary vx,
+        // note that card as 'swiped'
+        let velocity = Math.abs(vx);
+
+        // Temporary magic numbers given below that 'feel OK'
+        // Would love to know what the actual units are...
+        if (velocity > 1) {
+          Animated.decay(this.state.pan, {
+            velocity: {x: 10, y: 10},
+            deceleration: 0.98,
+          }).start(this.showNextMovie);
+        } else {
+          Animated.spring(this.state.pan, {
+            toValue: {x: 0, y: 0},
+            friction: 4,
+          }).start();
+        }
+      },
+    });
   }
 
   async componentDidMount() {
@@ -48,7 +93,14 @@ class MovieList extends Component {
     return sortedMovies;
   }//jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
-  onPressMovie = (event) => {
+  animateCardEntrance() {
+    Animated.spring(
+      this.state.enter,
+      { toValue: 1, friction: 6 }
+    ).start();
+  };
+
+  getNextMovie()  {
     let nextMovieIndex = this.state.currentMovie + 1;
     if (nextMovieIndex >= this.state.movies.length) {
       this.setState({currentMovie: 0});
@@ -57,11 +109,11 @@ class MovieList extends Component {
     }
   };
 
-  animateCardEntrance() {
-    Animated.spring(
-      this.state.enter,
-      { toValue: 1, friction: 8 }
-    ).start();
+  showNextMovie = () => {
+    this.state.pan.setValue({x: 0, y: 0});
+    this.state.enter.setValue(0);
+    this.getNextMovie();
+    this.animateCardEntrance();
   };
 
   renderLoadingView() {
@@ -75,11 +127,25 @@ class MovieList extends Component {
   }
 
   renderMovie(movie) {
-    let animatedCardStyles = {transform: [{scale: this.state.enter}]};
+    let rotate = this.state.pan.x.interpolate({
+      inputRange: [-200, 0, 200],
+      outputRange: ['-30deg', '0deg', '30deg'],
+    });
+    let animatedCardStyles = {
+      transform: [
+        {translateX: this.state.pan.x},
+        {translateY: this.state.pan.y},
+        {rotate: rotate},
+        {scale: this.state.enter},
+      ],
+      opacity: 1,
+    };
 
     return (
       <View style={styles.container}>
-        <Animated.View style={[styles.card, animatedCardStyles]}>
+        <Animated.View
+          style={[styles.card, animatedCardStyles]}
+          {...this.panResponder.panHandlers}>
           <Image
             source={{uri: movie.posters.thumbnail}}
             style={styles.thumbnail}
