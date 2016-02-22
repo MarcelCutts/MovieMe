@@ -8,6 +8,8 @@ import React, {
   Animated,
   PanResponder,
 } from 'react-native';
+import Loading from './Loading';
+
 import config from '../config';
 
 const PARAMS = '?apikey=' + config.API_KEY + '&page_limit=' + config.PAGE_SIZE;
@@ -116,16 +118,6 @@ class MovieList extends Component {
     this.animateCardEntrance();
   };
 
-  renderLoadingView() {
-    return (
-      <View style={styles.container}>
-        <Text>
-          Loading movies...
-        </Text>
-      </View>
-    );
-  }
-
   renderMovie(movie) {
     let rotate = this.state.pan.x.interpolate({
       inputRange: [-200, 0, 200],
@@ -152,7 +144,7 @@ class MovieList extends Component {
           />
           <View style={styles.rightContainer}>
             <Text style={styles.title}>{movie.title}</Text>
-            <Text style={styles.year}>{movie.ratings.audience_score}%</Text>
+            <Text style={styles.score}>{movie.ratings.audience_score}%</Text>
           </View>
         </Animated.View>
       </View>
@@ -161,7 +153,7 @@ class MovieList extends Component {
 
   render() {
     if (!this.state.loaded) {
-      return this.renderLoadingView();
+      return <Loading containerStyle={styles.container}/>;
     }
 
     return this.renderMovie(this.state.movies[this.state.currentMovie]);
@@ -174,13 +166,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#bcd5d1',
   },
   card: {
     shadowOffset:{
       width: 10,
       height: 10,
     },
+    backgroundColor: '#1d2120',
+    elevation: 20,
     flex: 1,
     shadowColor: 'black',
     shadowOpacity: 1.0,
@@ -195,9 +189,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 8,
     textAlign: 'center',
+    color: '#ba9077',
   },
-  year: {
+  score: {
     textAlign: 'center',
+    color: '##5a5c51',
   },
   thumbnail: {
     width: 53,
