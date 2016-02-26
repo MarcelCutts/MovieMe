@@ -36,7 +36,7 @@ class MovieList extends Component {
           x: this.state.pan.x._value,
           y: this.state.pan.y._value,
         });
-        this.state.pan.setValue({x: 0, y: 0});
+        this.state.pan.setValue({ x: 0, y: 0 });
       },
 
       // It's not super obvious, the but null at index
@@ -44,10 +44,10 @@ class MovieList extends Component {
       // We only choose to prove a dx update to ensure our
       // movie card can only go left or right.
       onPanResponderMove: Animated.event([
-        null, {dx: this.state.pan.x},
+        null, { dx: this.state.pan.x },
       ]),
 
-      onPanResponderRelease: (event, {vx}) => {
+      onPanResponderRelease: (event, { vx }) => {
         // Simple attempt for demo purposes,
         // if velocity of card is > arbitary vx,
         // note that card as 'swiped'
@@ -57,12 +57,12 @@ class MovieList extends Component {
         // Would love to know what the actual units are...
         if (velocity > 1) {
           Animated.decay(this.state.pan, {
-            velocity: {x: 10, y: 10},
+            velocity: { x: 10, y: 10 },
             deceleration: 0.98,
           }).start(this.showNextMovie);
         } else {
           Animated.spring(this.state.pan, {
-            toValue: {x: 0, y: 0},
+            toValue: { x: 0, y: 0 },
             friction: 4,
           }).start();
         }
@@ -105,14 +105,14 @@ class MovieList extends Component {
   getNextMovie()  {
     let nextMovieIndex = this.state.currentMovie + 1;
     if (nextMovieIndex >= this.state.movies.length) {
-      this.setState({currentMovie: 0});
+      this.setState({ currentMovie: 0 });
     } else {
-      this.setState({currentMovie: nextMovieIndex});
+      this.setState({ currentMovie: nextMovieIndex });
     }
   };
 
   showNextMovie = () => {
-    this.state.pan.setValue({x: 0, y: 0});
+    this.state.pan.setValue({ x: 0, y: 0 });
     this.state.enter.setValue(0);
     this.getNextMovie();
     this.animateCardEntrance();
@@ -125,10 +125,10 @@ class MovieList extends Component {
     });
     let animatedCardStyles = {
       transform: [
-        {translateX: this.state.pan.x},
-        {translateY: this.state.pan.y},
-        {rotate: rotate},
-        {scale: this.state.enter},
+        { translateX: this.state.pan.x },
+        { translateY: this.state.pan.y },
+        { rotate: rotate },
+        { scale: this.state.enter },
       ],
       opacity: 1,
     };
@@ -139,12 +139,22 @@ class MovieList extends Component {
           style={[styles.card, animatedCardStyles]}
           {...this.panResponder.panHandlers}>
           <Image
-            source={{uri: movie.posters.thumbnail}}
+            source={{ uri: movie.posters.thumbnail }}
             style={styles.thumbnail}
           />
           <View style={styles.rightContainer}>
             <Text style={styles.title}>{movie.title}</Text>
-            <Text style={styles.score}>{movie.ratings.audience_score}%</Text>
+
+            <View style={styles.scoreContainer}>
+              <Image
+                source={require('../assets/images/rtIcon.png')}
+                style={styles.icon}
+              />
+              <Text style={styles.score}>
+                {movie.ratings.audience_score}%
+              </Text>
+            </View>
+
           </View>
         </Animated.View>
       </View>
@@ -191,9 +201,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#ba9077',
   },
+  scoreContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   score: {
     textAlign: 'center',
-    color: '##5a5c51',
+    color: '#5a5c51',
+  },
+  icon: {
+    height: 15,
+    width: 15,
+    marginRight: 5,
   },
   thumbnail: {
     width: 53,
