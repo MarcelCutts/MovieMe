@@ -174,23 +174,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#bcd5d1',
   },
   card: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
     shadowOffset:{
       width: 10,
       height: 10,
     },
     backgroundColor: '#1d2120',
     elevation: 20,
-    flex: 1,
     shadowColor: 'black',
     shadowOpacity: 1.0,
     margin: 30,
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   rightContainer: {
     flex: 1,
@@ -205,10 +204,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
   },
   score: {
-    textAlign: 'center',
     color: '#5a5c51',
   },
   icon: {
