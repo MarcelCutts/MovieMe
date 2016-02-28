@@ -1,11 +1,11 @@
 'use strict';
 import React, { AppRegistry, Component } from 'react-native';
-import MovieList from './components/MovieList';
+import Main from './screens/Main';
 
 class MovieMe extends Component {
   render() {
     return (
-      <MovieList />
+      <Main />
     );
   }
 }
