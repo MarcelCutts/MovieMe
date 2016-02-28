@@ -9,6 +9,7 @@ import React, {
   PanResponder,
 } from 'react-native';
 import Loading from './Loading';
+import BackgroundImageContainer from './BackgroundImageContainer';
 
 import config from '../config';
 
@@ -134,30 +135,30 @@ class MovieList extends Component {
     };
 
     return (
-      <View style={styles.container}>
-        <Animated.View
-          style={[styles.card, animatedCardStyles]}
-          {...this.panResponder.panHandlers}>
-          <Image
-            source={{ uri: movie.posters.thumbnail }}
-            style={styles.thumbnail}
-          />
-          <View style={styles.rightContainer}>
-            <Text style={styles.title}>{movie.title}</Text>
+      <BackgroundImageContainer
+        image={require('../assets/images/patternBackground.png')}>
+         <Animated.View
+           style={[styles.card, animatedCardStyles]}
+           {...this.panResponder.panHandlers}>
+           <Image
+             source={{ uri: movie.posters.thumbnail }}
+             style={styles.thumbnail}
+           />
+           <View style={styles.rightContainer}>
+             <Text style={styles.title}>{movie.title}</Text>
+             <View style={styles.scoreContainer}>
+               <Image
+                 source={require('../assets/images/rtIcon.png')}
+                 style={styles.icon}
+               />
+               <Text style={styles.score}>
+                 {movie.ratings.audience_score}%
+               </Text>
+             </View>
 
-            <View style={styles.scoreContainer}>
-              <Image
-                source={require('../assets/images/rtIcon.png')}
-                style={styles.icon}
-              />
-              <Text style={styles.score}>
-                {movie.ratings.audience_score}%
-              </Text>
-            </View>
-
-          </View>
-        </Animated.View>
-      </View>
+           </View>
+         </Animated.View>
+     </BackgroundImageContainer>
     );
   };
 
@@ -171,12 +172,6 @@ class MovieList extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#bcd5d1',
-  },
   card: {
     flex: 1,
     flexDirection: 'row',
