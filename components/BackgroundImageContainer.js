@@ -18,6 +18,7 @@ class BackgroundImageContainer extends Component {
     return (
       <Image
         source={this.props.image}
+        resizeMode="cover"
         style={styles.backgroundImageContainer}>
         {this.props.children}
       </Image>
@@ -31,7 +32,6 @@ const styles = StyleSheet.create({
     height: null,
     flex: 1,
     flexDirection: 'row',
-    resizeMode: 'cover',
     justifyContent: 'center',
     alignItems: 'center',
   },
