@@ -150,6 +150,7 @@ const styles = StyleSheet.create({
       height: 10,
     },
     backgroundColor: '#1d2120',
+    borderRadius: 5,
     elevation: 20,
     shadowColor: 'black',
     shadowOpacity: 1.0,
@@ -180,6 +181,7 @@ const styles = StyleSheet.create({
   thumbnail: {
     width: 53,
     height: 81,
+    borderRadius: 5,
   },
 });
 
