@@ -93,11 +93,14 @@ class Movies extends Component {
     this.animateCardEntrance();
   };
 
-  renderMovie(movie) {
+  render() {
+    let movie = this.props.movies[this.state.currentMovie];
+
     let rotate = this.state.pan.x.interpolate({
       inputRange: [-200, 0, 200],
       outputRange: ['-30deg', '0deg', '30deg'],
     });
+
     let animatedCardStyles = {
       transform: [
         { translateX: this.state.pan.x },
@@ -133,10 +136,6 @@ class Movies extends Component {
         </Animated.View>
       </BackgroundImageContainer>
     );
-  };
-
-  render() {
-    return this.renderMovie(this.props.movies[this.state.currentMovie]);
   };
 }
 
