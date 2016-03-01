@@ -11,18 +11,22 @@ Seen it already? No worries, just swipe and go for the next one down the enterta
 This is a pretty basic React-Native application (as basic as those can be), so there aren't too many dark spells.
 
 For Mac, targeting iOS
+
 1. Follow the steps outlined in the 'Requirements' ['Requirements'](http://facebook.github.io/react-native/releases/0.21/docs/getting-started.html) section.
 2. Run `npm install -g react-native-cli`
+4. Run `npm install` in the project root.
 3. Start the code and simulator simply with `react-native run-ios` in the project root.
 
 For Mac/Linux, targeting Android
+
 1. Follow the steps outlined in the 'Requirements' ['Requirements'](http://facebook.github.io/react-native/releases/0.21/docs/getting-started.html) section, or get those packages via your equivilant local package manager.
 2. Run `npm install -g react-native-cli`
-3. Ensure you have suitable Android SDKs installed. I suggest just installing Android Studio and using its interfaces, as it'll be likely yo'll be using it for tweaking regardless.
-4. Ensure you have an Android device in `development mode` mode plugged in, or a emulated device running. For emulation, I suggest [GenyMotion](https://www.genymotion.com/)
-5. Start the code and run it on the first virtual or real device with `react-native run-android`.
-6. Close your auto-opening app, run `adb reverse tcp:8081 tcp:8081` on the computer's terminal to hook up passing JS bundles to device.
-7. Re-open app, enjoy functioning React-Native on your device.
+3. Run `npm install` in the project root.
+4. Ensure you have suitable Android SDKs installed. I suggest just installing Android Studio and using its interfaces, as it'll be likely yo'll be using it for tweaking regardless.
+5. Ensure you have an Android device in `development mode` mode plugged in, or a emulated device running. For emulation, I suggest [GenyMotion](https://www.genymotion.com/)
+6. Start the code and run it on the first virtual or real device with `react-native run-android`.
+7. Close your auto-opening app, run `adb reverse tcp:8081 tcp:8081` on the computer's terminal to hook up passing JS bundles to device.
+8. Re-open app, enjoy functioning React-Native on your device.
 
 
 
