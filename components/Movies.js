@@ -157,6 +157,8 @@ const styles = StyleSheet.create({
   },
   rightContainer: {
     flex: 1,
+    paddingRight: 5,
+    paddingLeft: 5,
   },
   title: {
     fontSize: 20,
