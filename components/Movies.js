@@ -43,17 +43,17 @@ class Movies extends Component {
         null, { dx: this.state.pan.x },
       ]),
 
-      onPanResponderRelease: (event, { vx }) => {
+      onPanResponderRelease: (event, { vx, vy }) => {
         // Simple attempt for demo purposes,
         // if velocity of card is > arbitary vx,
         // note that card as 'swiped'
-        let velocity = Math.abs(vx);
+        let absoluteVelocity = Math.abs(vx);
 
         // Temporary magic numbers given below that 'feel OK'
         // Would love to know what the actual units are...
-        if (velocity > 1) {
+        if (absoluteVelocity > 1) {
           Animated.decay(this.state.pan, {
-            velocity: { x: 10, y: 10 },
+            velocity: { x: vx, y: vy },
             deceleration: 0.98,
           }).start(this.showNextMovie);
         } else {
