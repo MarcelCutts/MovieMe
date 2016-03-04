@@ -7,8 +7,8 @@ import Movies from '../components/Movies';
 
 import config from '../config';
 
-const PARAMS = '?apikey=' + config.API_KEY + '&page_limit=' + config.PAGE_SIZE;
-const REQUEST_URL = config.API_URL + PARAMS;
+const PARAMS = '?apikey=' + config.RT_API_KEY + '&page_limit=' + config.PAGE_SIZE;
+const REQUEST_URL = config.RT_API_URL + PARAMS;
 
 class Main extends Component {
   constructor(props) {
