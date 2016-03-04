@@ -15,18 +15,35 @@ For Mac, targeting iOS
 1. Follow the steps outlined in the 'Requirements' ['Requirements'](http://facebook.github.io/react-native/releases/0.21/docs/getting-started.html) section.
 2. Run `npm install -g react-native-cli`
 4. Run `npm install` in the project root.
-3. Start the code and simulator simply with `react-native run-ios` in the project root.
+5. Set up the config file (see below).
+6. Start the code and simulator simply with `react-native run-ios` in the project root.
 
 For Mac/Linux, targeting Android
 
 1. Follow the steps outlined in the 'Requirements' ['Requirements'](http://facebook.github.io/react-native/releases/0.21/docs/getting-started.html) section, or get those packages via your equivilant local package manager.
 2. Run `npm install -g react-native-cli`
 3. Run `npm install` in the project root.
-4. Ensure you have suitable Android SDKs installed. I suggest just installing Android Studio and using its interfaces, as it'll be likely yo'll be using it for tweaking regardless.
-5. Ensure you have an Android device in `development mode` mode plugged in, or a emulated device running. For emulation, I suggest [GenyMotion](https://www.genymotion.com/)
-6. Start the code and run it on the first virtual or real device with `react-native run-android`.
-7. _Hardware device only_ :: Close your auto-opening app, run `adb reverse tcp:8081 tcp:8081` on the computer's terminal to hook up passing JS bundles to the physical device. Re-open app, enjoy functioning React-Native on your device.
+4. Set up the config file (see below).
+5. Ensure you have suitable Android SDKs installed. I suggest just installing Android Studio and using its interfaces, as it'll be likely yo'll be using it for tweaking regardless.
+6. Ensure you have an Android device in `development mode` mode plugged in, or a emulated device running. For emulation, I suggest [GenyMotion](https://www.genymotion.com/)
+7. Start the code and run it on the first virtual or real device with `react-native run-android`.
+8. _Hardware device only_ :: Close your auto-opening app, run `adb reverse tcp:8081 tcp:8081` on the computer's terminal to hook up passing JS bundles to the physical device. Re-open app, enjoy functioning React-Native on your device.
 
+
+### Configuration
+
+The application expects a file named `config.js` to be available in the root directory. Currently, this is being used to handle URL endpoints and keys to external services. Ideally some of this would be in Environment Variables, but I haven't quite gotten this to work in React Native yet.
+
+The structure of file you need to supply follows the following format
+
+```javascript
+export default config = {
+  RT_API_KEY: '<Your Rotten Tomatoes API key>',
+  RT_API_URL: 'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json',
+  PAGE_SIZE: 25,
+}
+
+```
 
 
 ## Doesn't this seem like that one FB tutorial?
