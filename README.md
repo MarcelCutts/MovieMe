@@ -25,8 +25,7 @@ For Mac/Linux, targeting Android
 4. Ensure you have suitable Android SDKs installed. I suggest just installing Android Studio and using its interfaces, as it'll be likely yo'll be using it for tweaking regardless.
 5. Ensure you have an Android device in `development mode` mode plugged in, or a emulated device running. For emulation, I suggest [GenyMotion](https://www.genymotion.com/)
 6. Start the code and run it on the first virtual or real device with `react-native run-android`.
-7. Close your auto-opening app, run `adb reverse tcp:8081 tcp:8081` on the computer's terminal to hook up passing JS bundles to device.
-8. Re-open app, enjoy functioning React-Native on your device.
+7. _Hardware device only_ :: Close your auto-opening app, run `adb reverse tcp:8081 tcp:8081` on the computer's terminal to hook up passing JS bundles to the physical device. Re-open app, enjoy functioning React-Native on your device.
 
 
 
