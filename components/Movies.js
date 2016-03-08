@@ -7,6 +7,7 @@ import React, {
   Image,
   Animated,
   PanResponder,
+  Dimensions,
 } from 'react-native';
 import Loading from './Loading';
 import BackgroundImageContainer from './BackgroundImageContainer';
@@ -17,6 +18,7 @@ class Movies extends Component {
     this.state = {
       loaded: false,
       currentMovie: 0,
+      showMovie: true,
       enter: new Animated.Value(0.5),
       pan: new Animated.ValueXY(),
     };
@@ -78,6 +80,7 @@ class Movies extends Component {
   };
 
   getNextMovie()  {
+    this.setState({ showMovie: false });
     let nextMovieIndex = this.state.currentMovie + 1;
     if (nextMovieIndex >= this.props.movies.length) {
       this.setState({ currentMovie: 0 });
@@ -90,7 +93,10 @@ class Movies extends Component {
     this.state.pan.setValue({ x: 0, y: 0 });
     this.state.enter.setValue(0);
     this.getNextMovie();
-    this.animateCardEntrance();
+    Animated.spring(
+      this.state.enter,
+      { toValue: 1, friction: 6 }
+    ).start(this.setState({ showMovie: true }));
   };
 
   render() {
@@ -111,6 +117,13 @@ class Movies extends Component {
       opacity: 1,
     };
 
+    // Despite best attempts, coaxing flexbox into dynamically
+    // letting an image in this scenario 'fill space' has baffled even
+    // even the RN famous. I cheat for now, get dimensions manually.
+    let { height, width } = Dimensions.get('window');
+    let posterHeight = height / 2;
+    let posterHeightStyle = { height: posterHeight };
+
     return (
       <BackgroundImageContainer
         image={require('../assets/images/patternBackground.png')}>
@@ -118,10 +131,10 @@ class Movies extends Component {
         style={[styles.card, animatedCardStyles]}
         {...this.panResponder.panHandlers}>
           <Image
-            source={{ uri: movie.posters.thumbnail }}
-            style={styles.thumbnail}
-            />
-            <View style={styles.rightContainer}>
+          source={{ uri: movie.posters.thumbnail }}
+          style={[styles.thumbnail, posterHeightStyle]}
+          />
+          <View style={styles.detailContainer}>
             <Text style={styles.title}>{movie.title}</Text>
             <View style={styles.scoreContainer}>
               <Image
@@ -142,8 +155,7 @@ class Movies extends Component {
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: 'column',
     shadowOffset:{
       width: 10,
       height: 10,
@@ -155,10 +167,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 1.0,
     margin: 30,
   },
-  rightContainer: {
+  detailContainer: {
     flex: 1,
-    paddingRight: 5,
-    paddingLeft: 5,
+    padding: 5,
   },
   title: {
     fontSize: 20,
@@ -180,8 +191,6 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   thumbnail: {
-    width: 53,
-    height: 81,
     borderRadius: 5,
   },
 });
