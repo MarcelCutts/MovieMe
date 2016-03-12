@@ -32,6 +32,7 @@ class Loading extends Component {
 const styles = StyleSheet.create({
   text: {
     fontSize: 48,
+    fontFamily: 'Park Lane NF',
     color: 'rgba(255,255,255,0.8)',
     backgroundColor: 'rgba(0,0,0,0)',
   },
