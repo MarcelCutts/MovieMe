@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
       height: 10,
     },
     backgroundColor: '#1d2120',
-    borderRadius: 5,
+    borderRadius: 20,
     elevation: 20,
     shadowColor: 'black',
     shadowOpacity: 1.0,
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
   detailContainer: {
     flex: 1,
-    padding: 5,
+    padding: 20,
   },
   title: {
     fontSize: 20,
@@ -191,7 +191,12 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   thumbnail: {
-    borderRadius: 5,
+    borderColor: '#ba9077',
+    borderWidth: 1,
+    borderRadius: 20,
+    marginTop: 20,
+    marginRight: 20,
+    marginLeft: 20,
   },
 });
 
