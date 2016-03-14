@@ -7,9 +7,8 @@ import React, {
   Image,
   Animated,
   PanResponder,
-  Dimensions,
 } from 'react-native';
-import Loading from './Loading';
+import Poster from './Poster';
 import BackgroundImageContainer from './BackgroundImageContainer';
 
 class Movies extends Component {
@@ -18,7 +17,6 @@ class Movies extends Component {
     this.state = {
       loaded: false,
       currentMovie: 0,
-      showMovie: true,
       enter: new Animated.Value(0.5),
       pan: new Animated.ValueXY(),
     };
@@ -80,7 +78,6 @@ class Movies extends Component {
   };
 
   getNextMovie()  {
-    this.setState({ showMovie: false });
     let nextMovieIndex = this.state.currentMovie + 1;
     if (nextMovieIndex >= this.props.movies.length) {
       this.setState({ currentMovie: 0 });
@@ -96,7 +93,7 @@ class Movies extends Component {
     Animated.spring(
       this.state.enter,
       { toValue: 1, friction: 6 }
-    ).start(this.setState({ showMovie: true }));
+    ).start();
   };
 
   render() {
@@ -117,23 +114,13 @@ class Movies extends Component {
       opacity: 1,
     };
 
-    // Despite best attempts, coaxing flexbox into dynamically
-    // letting an image in this scenario 'fill space' has baffled even
-    // even the RN famous. I cheat for now, get dimensions manually.
-    let { height, width } = Dimensions.get('window');
-    let posterHeight = height / 2;
-    let posterHeightStyle = { height: posterHeight };
-
     return (
       <BackgroundImageContainer
         image={require('../assets/images/patternBackground.png')}>
         <Animated.View
         style={[styles.card, animatedCardStyles]}
         {...this.panResponder.panHandlers}>
-          <Image
-          source={{ uri: movie.posters.thumbnail }}
-          style={[styles.thumbnail, posterHeightStyle]}
-          />
+          <Poster source={movie.posters.thumbnail} />
           <View style={styles.detailContainer}>
             <Text style={styles.title}>{movie.title}</Text>
             <View style={styles.scoreContainer}>
@@ -189,14 +176,6 @@ const styles = StyleSheet.create({
     height: 15,
     width: 15,
     marginRight: 5,
-  },
-  thumbnail: {
-    borderColor: '#ba9077',
-    borderWidth: 1,
-    borderRadius: 20,
-    marginTop: 20,
-    marginRight: 20,
-    marginLeft: 20,
   },
 });
 
