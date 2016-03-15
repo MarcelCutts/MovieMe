@@ -7,8 +7,12 @@ import Movies from '../components/Movies';
 
 import config from '../config';
 
-const PARAMS = '?apikey=' + config.RT_API_KEY + '&page_limit=' + config.PAGE_SIZE;
-const REQUEST_URL = config.RT_API_URL + PARAMS;
+const RT_PARAMS = '?apikey=' + config.RT_API_KEY + '&page_limit=' + config.PAGE_SIZE;
+const RT_REQUEST_URL = config.RT_API_URL + RT_PARAMS;
+
+const MDB_FIND_URL = 'https://api.themoviedb.org/3/find/';
+const MDB_QUERY_PARAMS = '?external_source=imdb_id&api_key=';
+const MDB_POSTER_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
 class Main extends Component {
   constructor(props) {
@@ -23,9 +27,12 @@ class Main extends Component {
   }
 
   async fetchMovies() {
-    let response = await fetch(REQUEST_URL);
+    let response = await fetch(RT_REQUEST_URL);
     let responseJson = await response.json();
     let sortedMovies = this.sortDataByAudienceScore(responseJson.movies);
+    sortedMovies = await Promise.all(sortedMovies.map(async movie => await this.getMoviePoster(movie)));
+    console.log(sortedMovies + '😆');
+
     this.setState({
       movies: sortedMovies,
       loaded: true,
@@ -41,6 +48,33 @@ class Main extends Component {
 
     return sortedMovies;
   }//jscs: enable requireCamelCaseOrUpperCaseIdentifiers
+
+  async getMoviePoster(movie) {
+    try {
+      let url = this.generateMovieUrl(movie.alternate_ids.imdb);
+      let result = await this.getMovieDBMetadata(url);
+      let posterPath =  await result.movie_results[0].poster_path;
+      movie.mdbPosterUri = MDB_POSTER_BASE_URL +  posterPath;
+      return movie;
+    } catch (e) {
+      return movie;
+    }
+
+    return movie;
+  }
+
+  async getMovieDBMetadata(url) {
+    let response = await fetch(url);
+    let responseJson = await response.json();
+    return responseJson;
+  }
+
+  generateMovieUrl(imdbId) {
+    let base = 'https://api.themoviedb.org/3/find/';
+    let queryParams = '?external_source=imdb_id&api_key=';
+    let imdbParam = 'tt' + imdbId;
+    return base + imdbParam + queryParams + config.MDB_API_KEY;
+  }
 
   render() {
     if (!this.state.loaded) {

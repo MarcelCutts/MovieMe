@@ -120,7 +120,7 @@ class Movies extends Component {
         <Animated.View
         style={[styles.card, animatedCardStyles]}
         {...this.panResponder.panHandlers}>
-          <Poster thumbnailUri={movie.posters.thumbnail} imdbId={movie.alternate_ids.imdb} />
+          <Poster Uri={movie.mdbPosterUri || movie.posters.thumbnail}  />
           <View style={styles.detailContainer}>
             <Text style={styles.title}>{movie.title}</Text>
             <View style={styles.scoreContainer}>
