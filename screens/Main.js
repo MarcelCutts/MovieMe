@@ -26,12 +26,18 @@ class Main extends Component {
     await this.fetchMovies();
   }
 
+  //TODO implement redux + sagas to move all this data logic elsewhere
   async fetchMovies() {
-    let response = await fetch(RT_REQUEST_URL);
-    let responseJson = await response.json();
+    let responseJson = await this.getJson(RT_REQUEST_URL);
+
+    // Sort the movies by ranking - highest first!
     let sortedMovies = this.sortDataByAudienceScore(responseJson.movies);
-    sortedMovies = await Promise.all(sortedMovies.map(async movie => await this.getMoviePoster(movie)));
-    console.log(sortedMovies + '😆');
+
+    // Attempt to attach a high res poster path for each movie from MDB
+    // Also, await* has been removed - now we're back to Promise.all()!
+    sortedMovies = await Promise.all(sortedMovies.map(
+      async movie => await this.getMoviePoster(movie)
+    ));
 
     this.setState({
       movies: sortedMovies,
@@ -39,41 +45,36 @@ class Main extends Component {
     });
   }
 
-  // RT API requires use of snake_case
+  // RT and MDB API requires use of snake_case
   //jscs: disable requireCamelCaseOrUpperCaseIdentifiers
   sortDataByAudienceScore(movies) {
     return movies.sort((a, b)  => {
       return b.ratings.audience_score - a.ratings.audience_score;
     });
-
-    return sortedMovies;
-  }//jscs: enable requireCamelCaseOrUpperCaseIdentifiers
+  }
 
   async getMoviePoster(movie) {
     try {
-      let url = this.generateMovieUrl(movie.alternate_ids.imdb);
-      let result = await this.getMovieDBMetadata(url);
+      let mdbMovieUrl = this.generateMdbMovieUrl(movie.alternate_ids.imdb);
+      let result = await this.getJson(mdbMovieUrl);
       let posterPath =  await result.movie_results[0].poster_path;
       movie.mdbPosterUri = MDB_POSTER_BASE_URL +  posterPath;
-      return movie;
     } catch (e) {
-      return movie;
+      console.log(e);
     }
 
     return movie;
-  }
+  } //jscs: enable requireCamelCaseOrUpperCaseIdentifiers
 
-  async getMovieDBMetadata(url) {
+  async getJson(url) {
     let response = await fetch(url);
     let responseJson = await response.json();
     return responseJson;
   }
 
-  generateMovieUrl(imdbId) {
-    let base = 'https://api.themoviedb.org/3/find/';
-    let queryParams = '?external_source=imdb_id&api_key=';
+  generateMdbMovieUrl(imdbId) {
     let imdbParam = 'tt' + imdbId;
-    return base + imdbParam + queryParams + config.MDB_API_KEY;
+    return MDB_FIND_URL + imdbParam + MDB_QUERY_PARAMS + config.MDB_API_KEY;
   }
 
   render() {
