@@ -68,8 +68,7 @@ class Main extends Component {
 
   async getJson(url) {
     let response = await fetch(url);
-    let responseJson = await response.json();
-    return responseJson;
+    return await response.json();
   }
 
   generateMdbMovieUrl(imdbId) {

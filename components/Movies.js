@@ -90,10 +90,7 @@ class Movies extends Component {
     this.state.pan.setValue({ x: 0, y: 0 });
     this.state.enter.setValue(0);
     this.getNextMovie();
-    Animated.spring(
-      this.state.enter,
-      { toValue: 1, friction: 6 }
-    ).start();
+    this.animateCardEntrance();
   };
 
   render() {
