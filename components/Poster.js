@@ -1,31 +1,20 @@
 'use strict';
-import React, { Component, Image, StyleSheet, Dimensions } from 'react-native';
-import config from '../config';
+import React, { Image, StyleSheet, Dimensions } from 'react-native';
 
+const Poster = ({ uri }) => {
+  // Despite best attempts, coaxing flexbox into dynamically
+  // letting an image in this scenario 'fill space' has baffled even
+  // even the RN famous. I cheat for now, get dimensions manually.
+  let { height, width } = Dimensions.get('window');
+  let posterHeight = height / 1.8;
 
-const BASE_URL = 'https://image.tmdb.org/t/p/w500';
-
-class Poster extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    // Despite best attempts, coaxing flexbox into dynamically
-    // letting an image in this scenario 'fill space' has baffled even
-    // even the RN famous. I cheat for now, get dimensions manually.
-    let { height, width } = Dimensions.get('window');
-    let posterHeight = height / 1.8;
-    let posterHeightStyle = { height: posterHeight };
-
-    return (
-      <Image
-      source={{ uri: this.props.Uri }}
-      style={[styles.poster, posterHeightStyle]}
-      />
-    );
-  }
-}
+  return (
+    <Image
+    source={{ uri }}
+    style={[styles.poster, { height: posterHeight }]}
+    />
+  );
+};
 
 const styles = StyleSheet.create({
   poster: {

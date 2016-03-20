@@ -14,7 +14,7 @@ const MDB_FIND_URL = 'https://api.themoviedb.org/3/find/';
 const MDB_QUERY_PARAMS = '?external_source=imdb_id&api_key=';
 const MDB_POSTER_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
-class Main extends Component {
+class MovieApp extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -84,4 +84,4 @@ class Main extends Component {
     return <Movies movies={this.state.movies} />;
   };
 }
-export default Main;
+export default MovieApp;

@@ -1,13 +1,5 @@
 'use strict';
 import React, { AppRegistry, Component } from 'react-native';
-import Main from './screens/Main';
+import App from './containers/App';
 
-class MovieMe extends Component {
-  render() {
-    return (
-      <Main />
-    );
-  }
-}
-
-AppRegistry.registerComponent('MovieMe', () => MovieMe);
+AppRegistry.registerComponent('MovieMe', () => App);
