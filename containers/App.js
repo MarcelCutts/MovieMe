@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { createStore, combineReducers } from 'redux';
+import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import movies from '../reducers/Movies';
+import configureStore from '../store/configureStore';
 
 import MovieApp from './MovieApp';
 
-const store = createStore(movies);
-
+const store = configureStore();
 const App = () => {
   return (
     <Provider store={store}>
