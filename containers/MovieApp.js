@@ -48,9 +48,9 @@ class MovieApp extends Component {
   // RT and MDB API requires use of snake_case
   //jscs: disable requireCamelCaseOrUpperCaseIdentifiers
   sortDataByAudienceScore(movies) {
-    return movies.sort((a, b)  => {
-      return b.ratings.audience_score - a.ratings.audience_score;
-    });
+    return movies.sort((a, b)  =>
+      b.ratings.audience_score - a.ratings.audience_score
+    );
   }
 
   async getMoviePoster(movie) {
