@@ -17,7 +17,6 @@ class Movies extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loaded: false,
       currentMovie: 0,
       enter: new Animated.Value(0.5),
       pan: new Animated.ValueXY(),
