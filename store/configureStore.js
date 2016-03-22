@@ -1,10 +1,15 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
 import devTools from 'remote-redux-devtools';
 import { movies } from '../reducers';
 
-function configureStore(initialState) {
-  const store = devTools()(createStore)(movies, initialState);
-  return store;
-}
+const configureStore = (initialState) => {
+  const enhancer = compose(
+    applyMiddleware(thunk),
+    devTools()
+  );
+
+  return createStore(movies, initialState, enhancer);
+};
 
 export default configureStore;
