@@ -10,7 +10,7 @@ import React, {
 } from 'react-native';
 import Poster from './Poster';
 import { connect } from 'react-redux';
-import { addMovie } from '../actions';
+import { chooseMovie } from '../actions';
 import BackgroundImageContainer from './BackgroundImageContainer';
 
 class Movies extends Component {
@@ -53,7 +53,7 @@ class Movies extends Component {
         // Temporary magic numbers given below that 'feel OK'
         // Would love to know what the actual units are...
         if (absoluteVelocity > 1) {
-          this.props.dispatch(addMovie(this.props.movies[this.state.currentMovie]));
+          this.props.dispatch(chooseMovie(this.props.movies[this.state.currentMovie]));
           Animated.decay(this.state.pan, {
             velocity: { x: vx, y: vy },
             deceleration: 0.98,

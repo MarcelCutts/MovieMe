@@ -6,12 +6,10 @@ import configureStore from '../store/configureStore';
 import MovieApp from './MovieApp';
 
 const store = configureStore();
-const App = () => {
-  return (
+const App = () => (
     <Provider store={store}>
       <MovieApp />
     </Provider>
-  );
-};
+);
 
 export default App;

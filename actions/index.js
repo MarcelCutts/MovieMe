@@ -4,8 +4,8 @@ const RT_PARAMS = '?apikey=' + config.RT_API_KEY + '&page_limit=' + config.PAGE_
 const RT_REQUEST_URL = config.RT_API_URL + RT_PARAMS;
 
 let nextMovieId = 0;
-export const addMovie = (movie) => ({
-  type: 'ADD_MOVIE',
+export const chooseMovie = (movie) => ({
+  type: 'CHOOSE_MOVIE',
   id: nextMovieId++,
   movie,
 });

@@ -1,6 +1,8 @@
-export const movies = (state = [], action) => {
+import { combineReducers } from 'redux';
+
+const chosenMovies = (state = [], action) => {
   switch (action.type) {
-    case 'ADD_MOVIE':
+    case 'CHOOSE_MOVIE':
       return [
         ...state,
         {
@@ -12,3 +14,26 @@ export const movies = (state = [], action) => {
       return state;
   }
 };
+
+const movies = (state = { isFetching: false, items: [] }, action) => {
+  switch (action.type) {
+    case 'REQUEST_MOVIES':
+      return { ...state, isFetching: true };
+    case 'RECEIVE_MOVIES':
+      return { ...state, ...{
+        isFetching: false,
+        items: action.movies,
+        lastUpdated: action.receivedAt,
+      },
+    };
+    default:
+      return state;
+  }
+};
+
+const rootReducer = combineReducers({
+  chosenMovies,
+  movies,
+});
+
+export default rootReducer;
