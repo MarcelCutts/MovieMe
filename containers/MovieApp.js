@@ -35,7 +35,7 @@ class MovieApp extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  movies: getMoviesSortedByRating(state.movies.items),
+  movies: getMoviesSortedByRating([...state.movies.items]),
   isLoading: state.movies.isFetching,
 });
 
