@@ -17,6 +17,12 @@ const MDB_FIND_URL = 'https://api.themoviedb.org/3/find/';
 const MDB_QUERY_PARAMS = '?external_source=imdb_id&api_key=';
 const MDB_POSTER_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
+
+const getMoviesSortedByRating = (movies) =>
+  movies.sort((a, b) =>
+    b.ratings.audience_score - a.ratings.audience_score
+  );
+
 class MovieApp extends Component {
   constructor(props) {
     super(props);
@@ -90,7 +96,7 @@ class MovieApp extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  movies: state.movies.items,
+  movies: getMoviesSortedByRating(state.movies.items),
   isLoading: state.movies.isFetching,
 });
 

@@ -23,7 +23,6 @@ export const receiveMovies = (movies) => ({
 export const fetchMovies = () =>
   dispatch => {
     dispatch(requestMovies());
-    console.log(RT_REQUEST_URL + ' 🔥');
     return fetch(RT_REQUEST_URL)
       .then(req => req.json())
       .then(json => dispatch(receiveMovies(json.movies)));
