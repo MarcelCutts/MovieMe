@@ -7,6 +7,9 @@ import Movies from '../components/Movies';
 
 import config from '../config';
 
+import { connect } from 'react-redux';
+import { fetchMovies } from '../actions';
+
 const RT_PARAMS = '?apikey=' + config.RT_API_KEY + '&page_limit=' + config.PAGE_SIZE;
 const RT_REQUEST_URL = config.RT_API_URL + RT_PARAMS;
 
@@ -23,7 +26,8 @@ class MovieApp extends Component {
   };
 
   async componentDidMount() {
-    await this.fetchMovies();
+    const { dispatch, movies, isLoading } = this.props;
+    dispatch(fetchMovies());
   }
 
   //TODO implement redux + sagas to move all this data logic elsewhere
@@ -77,11 +81,19 @@ class MovieApp extends Component {
   }
 
   render() {
-    if (!this.state.loaded) {
+    if (this.props.isLoading) {
       return <Loading />;
     }
 
-    return <Movies movies={this.state.movies} />;
+    return <Movies movies={this.props.movies} />;
   };
 }
+
+const mapStateToProps = (state) => ({
+  movies: state.movies.items,
+  isLoading: state.movies.isFetching,
+});
+
+MovieApp = connect(mapStateToProps)(MovieApp);
+
 export default MovieApp;

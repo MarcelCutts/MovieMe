@@ -15,7 +15,7 @@ const chosenMovies = (state = [], action) => {
   }
 };
 
-const movies = (state = { isFetching: false, items: [] }, action) => {
+const movies = (state = { isFetching: true, items: [] }, action) => {
   switch (action.type) {
     case 'REQUEST_MOVIES':
       return { ...state, isFetching: true };

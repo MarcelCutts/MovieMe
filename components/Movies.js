@@ -128,7 +128,7 @@ class Movies extends Component {
               style={styles.icon}
               />
               <Text style={styles.score}>
-                { movie.ratings.audience_score}%
+                { movie.ratings.audience_score }%
               </Text>
             </View>
           </View>
