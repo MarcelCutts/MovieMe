@@ -20,6 +20,12 @@ export const receiveMovies = (movies) => ({
   movies,
 });
 
+export const requestMoviePoster = (movie) =>
+  dispatch =>
+    fetch('placeholderMdbUrl')
+      .then(req => req.json())
+      .then(json => dispatch(receivePoster(movie, json)));
+
 export const fetchMovies = () =>
   dispatch => {
     dispatch(requestMovies());
