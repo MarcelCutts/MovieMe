@@ -8,10 +8,10 @@ import Movies from '../components/Movies';
 import config from '../config';
 
 import { connect } from 'react-redux';
-import { fetchMovies } from '../actions';
+import { fetchMovies, requestMoviePosters } from '../actions';
 
 const getMoviesSortedByRating = (movies) =>
-  movies.sort((a, b) =>
+  [...movies].sort((a, b) =>
     b.ratings.audience_score - a.ratings.audience_score
   );
 
@@ -21,16 +21,17 @@ class MovieApp extends Component {
   };
 
   componentDidMount() {
-    const { dispatch, movies } = this.props;
+    const { dispatch } = this.props;
     dispatch(fetchMovies());
   }
 
   render() {
-    if (this.props.isLoading) {
+    const { movies, isLoading } = this.props;
+    if (isLoading) {
       return <Loading />;
     }
 
-    return <Movies movies={this.props.movies} />;
+    return <Movies movies={movies} />;
   };
 }
 
