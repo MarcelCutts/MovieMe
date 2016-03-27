@@ -21,8 +21,7 @@ class MovieApp extends Component {
   };
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(fetchMovies());
+    this.props.dispatch(fetchMovies());
   }
 
   render() {
