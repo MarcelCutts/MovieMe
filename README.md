@@ -41,7 +41,7 @@ export default config = {
   RT_API_KEY: '<Your Rotten Tomatoes API key>',
   RT_API_URL: 'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json',
   PAGE_SIZE: 25,
-  MDB_API_KEY = '<Your TheMovieDB API key'>,
+  MDB_API_KEY: '<Your TheMovieDB API key'>,
 }
 
 ```
