@@ -55,7 +55,7 @@ class Movies extends Component {
         const { dispatch, movies } = this.props;
         if (absoluteVelocity > 1) {
           if (vx > 1) {
-            dispatch(chooseMovie(movies[currentMovie]));
+            dispatch(chooseMovie(movies[this.state.currentMovie]));
           };
 
           Animated.decay(this.state.pan, {
