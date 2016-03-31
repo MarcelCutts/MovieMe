@@ -52,8 +52,12 @@ class Movies extends Component {
 
         // Temporary magic numbers given below that 'feel OK'
         // Would love to know what the actual units are...
+        const { dispatch, movies } = this.props;
         if (absoluteVelocity > 1) {
-          this.props.dispatch(chooseMovie(this.props.movies[this.state.currentMovie]));
+          if (vx > 1) {
+            dispatch(chooseMovie(movies[currentMovie]));
+          };
+
           Animated.decay(this.state.pan, {
             velocity: { x: vx, y: vy },
             deceleration: 0.98,
