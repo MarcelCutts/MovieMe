@@ -1,10 +1,12 @@
 # MovieMe
 
-You want to see a movie, it tells you which one.
+You want to see a movie, but you don't feel like picking which one?
 
-Feel like going to see a movie, but don't want to spend your time pouring through reviews or bickering with friends? No problem, MovieMe gives you the best movie in theatres right now. Go see it.
+No longer a problem with *MovieMe*.
 
-Seen it already? No worries, just swipe and go for the next one down the entertainment stack.
+Skip the time wasted b pouring through reviews and bickering with friends. MovieMe gives you the best movie in theatres right now. Go see it.
+
+Seen it already? No worries, just swipe left and go for the next one down the entertainment stack.
 
 ## Getting it up and running
 
