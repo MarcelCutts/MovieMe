@@ -15,7 +15,7 @@ This is a pretty basic React-Native application (as basic as those can be), so t
 For Mac, targeting iOS
 
 1. Follow the steps outlined in the 'Requirements' ['Requirements'](http://facebook.github.io/react-native/releases/0.21/docs/getting-started.html) section.
-2. Run `npm install -g react-native-cli`
+2. Run `npm install -g react-native-cli`.
 4. Run `npm install` in the project root.
 5. Set up the config file (see below).
 6. Start the code and simulator simply with `react-native run-ios` in the project root.
